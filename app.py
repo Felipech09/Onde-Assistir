@@ -1,6 +1,5 @@
 import requests
 from pymongo import MongoClient
-import os
 
 # Configurações
 TMDB_API_KEY = "c6d86324a69d5052046357e055a61df"
@@ -20,7 +19,7 @@ def buscar_filme(titulo: str):
     if filme:
         return filme
 
-    # consulta TMDb
+    # consulta TMDb para buscar ID do filme
     url = "https://api.themoviedb.org/3/search/movie"
     params = {
         "api_key": TMDB_API_KEY,
@@ -38,11 +37,23 @@ def buscar_filme(titulo: str):
         return None
 
     first = data["results"][0]
+    movie_id = first["id"]
+
+    # consulta provedores de streaming
+    url_providers = f"https://api.themoviedb.org/3/movie/{movie_id}/watch/providers"
+    params = {"api_key": TMDB_API_KEY}
+    resp_providers = requests.get(url_providers, params=params).json()
+
+    providers = []
+    if "results" in resp_providers and "BR" in resp_providers["results"]:
+        br_data = resp_providers["results"]["BR"]
+        if "flatrate" in br_data:
+            providers = [p["provider_name"] for p in br_data["flatrate"]]
+
     filme = {
         "title": first.get("title", titulo),
         "year": first.get("release_date", "")[:4],
-        # simplificado: plataformas fixas (não é real)
-        "platforms": ["Netflix", "Prime Video"]
+        "platforms": providers if providers else ["Não disponível em streaming no Brasil"]
     }
     coll.insert_one(filme)
     return filme
