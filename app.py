@@ -2,7 +2,7 @@ import requests
 from pymongo import MongoClient
 
 # Configurações
-TMDB_API_KEY = "c6d86324a69d5052046357e055a61df"
+TMDB_API_KEY = "c6d862324a69d5052046357e055a61df"
 MONGO_URI = "mongodb://localhost:27017/"
 client = MongoClient(MONGO_URI)
 db = client["movies_db"]
