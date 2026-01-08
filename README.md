@@ -52,3 +52,10 @@ Esse fluxo garante mais **performance**, **menos requisições externas** e **pe
 - **MongoDB**
 - **Requests** (requisições HTTP)
 - **TMDb API** (informações de filmes e streaming)
+
+---
+
+## Resultado no terminal e no Banco:
+
+<img width="500" height="894" alt="Image" src="https://github.com/user-attachments/assets/2ad2133b-fcd8-484f-b5c5-934364ca9273" />
+<img width="423" height="247" alt="Image" src="https://github.com/user-attachments/assets/2e01f955-20a4-4742-a787-7d91dc9e50c4" />
